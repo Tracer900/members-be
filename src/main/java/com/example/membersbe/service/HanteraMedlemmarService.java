@@ -21,6 +21,13 @@ public class HanteraMedlemmarService {
 
     private PasswordEncoder passwordEncoder;
 
+    public HanteraMedlemmarService(MedlemRepository medlemRepository, JwtUtils jwtUtils, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
+        this.medlemRepository = medlemRepository;
+        this.jwtUtils = jwtUtils;
+        this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
+    }
+
     public RequestResponse registreraMedlem(RequestResponse registreraMedlemRequest) {
 
         RequestResponse response = new RequestResponse();
