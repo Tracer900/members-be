@@ -20,6 +20,7 @@ public class RequestResponse {
     private String namn;
     private String gatuadress;
     private int postnummer;
+    private String postort;
     private String epost;
     private String telefon;
     private String password;
@@ -29,7 +30,7 @@ public class RequestResponse {
 
     public RequestResponse(int httpStatus, String error, String meddelande, String jwtToken,
                            String uppdateraJwtToken, String utgangsTid, String namn, String gatuadress,
-                           int postnummer, String epost, String telefon, String password, String roll,
+                           int postnummer, String postort, String epost, String telefon, String password, String roll,
                            Medlem medlem, List<Medlem> medlemmar) {
         this.httpStatus = httpStatus;
         this.error = error;
@@ -40,12 +41,16 @@ public class RequestResponse {
         this.namn = namn;
         this.gatuadress = gatuadress;
         this.postnummer = postnummer;
+        this.postort = postort;
         this.epost = epost;
         this.telefon = telefon;
         this.password = password;
         this.roll = roll;
         this.medlem = medlem;
         this.medlemmar = medlemmar;
+    }
+
+    public RequestResponse() {
     }
 
     public int getHttpStatus() {
@@ -120,6 +125,14 @@ public class RequestResponse {
         this.postnummer = postnummer;
     }
 
+    public String getPostort() {
+        return postort;
+    }
+
+    public void setPostort(String postnummer) {
+        this.postort = postort;
+    }
+
     public String getEpost() {
         return epost;
     }
@@ -181,6 +194,7 @@ public class RequestResponse {
                 && Objects.equals(utgangsTid, that.utgangsTid)
                 && Objects.equals(namn, that.namn)
                 && Objects.equals(gatuadress, that.gatuadress)
+                && Objects.equals(postort, that.postort)
                 && Objects.equals(epost, that.epost)
                 && Objects.equals(telefon, that.telefon)
                 && Objects.equals(password, that.password)
@@ -193,7 +207,7 @@ public class RequestResponse {
     public int hashCode() {
         return Objects.hash(httpStatus, error, meddelande, jwtToken,
                 uppdateraJwtToken, utgangsTid, namn, gatuadress, postnummer,
-                epost, telefon, password, roll, medlem, medlemmar);
+                postort, epost, telefon, password, roll, medlem, medlemmar);
     }
 
     @Override
@@ -208,6 +222,7 @@ public class RequestResponse {
                 ", namn='" + namn + '\'' +
                 ", gatuadress='" + gatuadress + '\'' +
                 ", postnummer=" + postnummer +
+                ", postort='" + postort + '\'' +
                 ", epost='" + epost + '\'' +
                 ", telefon='" + telefon + '\'' +
                 ", password='" + password + '\'' +
