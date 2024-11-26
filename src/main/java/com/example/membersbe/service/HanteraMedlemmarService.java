@@ -62,7 +62,7 @@ public class HanteraMedlemmarService {
         return response;
     }
 
-    public RequestResponse login(RequestResponse loginRequest) {
+    public RequestResponse inLoggning(RequestResponse loginRequest) {
         RequestResponse response = new RequestResponse();
 
         try {
@@ -109,7 +109,7 @@ public class HanteraMedlemmarService {
         }
     }
 
-    public RequestResponse getAllUsers() {
+    public RequestResponse hamtaAllaMedlemmar() {
         RequestResponse response = new RequestResponse();
 
         try {
@@ -131,7 +131,7 @@ public class HanteraMedlemmarService {
     }
 
 
-    public RequestResponse getUsersById(UUID id) {
+    public RequestResponse HamtaMedlemMedId(UUID id) {
         RequestResponse response = new RequestResponse();
         try {
             Medlem medlem = medlemRepository.findById(id).orElseThrow(() -> new RuntimeException("User Not found"));
@@ -146,7 +146,7 @@ public class HanteraMedlemmarService {
     }
 
 
-    public RequestResponse deleteUser(UUID id) {
+    public RequestResponse raderaMedlem(UUID id) {
         RequestResponse response = new RequestResponse();
         try {
             Optional<Medlem> optionalMedlem = medlemRepository.findById(id);
@@ -165,7 +165,7 @@ public class HanteraMedlemmarService {
         return response;
     }
 
-    public RequestResponse updateUser(UUID id, Medlem medlem) {
+    public RequestResponse uppdateraMedlem(UUID id, Medlem medlem) {
         RequestResponse response = new RequestResponse();
         try {
             Optional<Medlem> optionalMedlem = medlemRepository.findById(id);
@@ -198,7 +198,7 @@ public class HanteraMedlemmarService {
     }
 
 
-    public RequestResponse getMyInfo(String email){
+    public RequestResponse hamtaMinInfo(String email){
         RequestResponse response = new RequestResponse();
         try {
             Optional<Medlem> userOptional = medlemRepository.findByEpost(email);
