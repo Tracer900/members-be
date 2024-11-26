@@ -16,13 +16,13 @@ import java.util.UUID;
 @Service
 public class HanteraMedlemmarService {
 
-    private MedlemRepository medlemRepository;
+    private final MedlemRepository medlemRepository;
 
-    private JwtUtils jwtUtils;
+    private final JwtUtils jwtUtils;
 
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public HanteraMedlemmarService(MedlemRepository medlemRepository, JwtUtils jwtUtils, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
         this.medlemRepository = medlemRepository;
@@ -130,8 +130,7 @@ public class HanteraMedlemmarService {
         }
     }
 
-
-    public RequestResponse HamtaMedlemMedId(UUID id) {
+    public RequestResponse hamtaMedlemMedId(UUID id) {
         RequestResponse response = new RequestResponse();
         try {
             Medlem medlem = medlemRepository.findById(id).orElseThrow(() -> new RuntimeException("User Not found"));
