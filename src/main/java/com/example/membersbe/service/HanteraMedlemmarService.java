@@ -9,6 +9,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class HanteraMedlemmarService {
@@ -104,5 +107,114 @@ public class HanteraMedlemmarService {
             response.setMeddelande(e.getMessage());
             return response;
         }
+    }
+
+    public RequestResponse getAllUsers() {
+        RequestResponse response = new RequestResponse();
+
+        try {
+            List<Medlem> result = medlemRepository.findAll();
+            if (!result.isEmpty()) {
+                response.setMedlemmar(result);
+                response.setHttpStatus(200);
+                response.setMeddelande("Successful");
+            } else {
+                response.setHttpStatus(404);
+                response.setMeddelande("No users found");
+            }
+            return response;
+        } catch (Exception e) {
+            response.setHttpStatus(500);
+            response.setMeddelande("Error occurred: " + e.getMessage());
+            return response;
+        }
+    }
+
+
+    public RequestResponse getUsersById(UUID id) {
+        RequestResponse response = new RequestResponse();
+        try {
+            Medlem medlem = medlemRepository.findById(id).orElseThrow(() -> new RuntimeException("User Not found"));
+            response.setMedlem(medlem);
+            response.setHttpStatus(200);
+            response.setMeddelande("Users with id '" + id + "' found successfully");
+        } catch (Exception e) {
+            response.setHttpStatus(500);
+            response.setMeddelande("Error occurred: " + e.getMessage());
+        }
+        return response;
+    }
+
+
+    public RequestResponse deleteUser(UUID id) {
+        RequestResponse response = new RequestResponse();
+        try {
+            Optional<Medlem> optionalMedlem = medlemRepository.findById(id);
+            if (optionalMedlem.isPresent()) {
+                medlemRepository.deleteById(id);
+                response.setHttpStatus(200);
+                response.setMeddelande("User deleted successfully");
+            } else {
+                response.setHttpStatus(404);
+                response.setMeddelande("User not found for deletion");
+            }
+        } catch (Exception e) {
+            response.setHttpStatus(500);
+            response.setMeddelande("Error occurred while deleting user: " + e.getMessage());
+        }
+        return response;
+    }
+
+    public RequestResponse updateUser(UUID id, Medlem medlem) {
+        RequestResponse response = new RequestResponse();
+        try {
+            Optional<Medlem> optionalMedlem = medlemRepository.findById(id);
+            if (optionalMedlem.isPresent()) {
+                Medlem existerandeMedlem = optionalMedlem.get();
+                existerandeMedlem.setEpost(medlem.getEpost());
+                existerandeMedlem.setNamn(medlem.getNamn());
+                existerandeMedlem.setPostort(medlem.getPostort());
+                existerandeMedlem.setRoll(medlem.getRoll());
+
+                // Check if password is present in the request
+                if (medlem.getPassword() != null && !medlem.getPassword().isEmpty()) {
+                    // Encode the password and update it
+                    existerandeMedlem.setPassword(passwordEncoder.encode(medlem.getPassword()));
+                }
+
+                Medlem uppdateradMedlem = medlemRepository.save(existerandeMedlem);
+                response.setMedlem(uppdateradMedlem);
+                response.setHttpStatus(200);
+                response.setMeddelande("User updated successfully");
+            } else {
+                response.setHttpStatus(404);
+                response.setMeddelande("User not found for update");
+            }
+        } catch (Exception e) {
+            response.setHttpStatus(500);
+            response.setMeddelande("Error occurred while updating user: " + e.getMessage());
+        }
+        return response;
+    }
+
+
+    public RequestResponse getMyInfo(String email){
+        RequestResponse response = new RequestResponse();
+        try {
+            Optional<Medlem> userOptional = medlemRepository.findByEpost(email);
+            if (userOptional.isPresent()) {
+                response.setMedlem(userOptional.get());
+                response.setHttpStatus(200);
+                response.setMeddelande("successful");
+            } else {
+                response.setHttpStatus(404);
+                response.setMeddelande("User not found for update");
+            }
+
+        }catch (Exception e){
+            response.setHttpStatus(500);
+            response.setMeddelande("Error occurred while getting user info: " + e.getMessage());
+        }
+        return response;
     }
 }
