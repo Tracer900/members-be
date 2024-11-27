@@ -19,7 +19,7 @@ public class JwtUtils {
     private static final Long UTGANGS_TID = 7200000L; //2 hours
 
     public JwtUtils() {
-        String nyckel_secret = "05045e1b-30da-460c-ac97-16ec88921580-fc42a36f-9136-4655-abf2-cf8591cad79e";
+        String nyckel_secret = "412EC77DE11A48E7B15FB94906C430050920E59BC39F408F8AB0A3E60D1420991D7D4E58BE7B4406B2F30C82657BA136D740ED074C164D6A9211051424035D5F";
         byte[] nyckelBytes = Base64.getDecoder().decode(nyckel_secret.getBytes(StandardCharsets.UTF_8));
         this.nyckel = new SecretKeySpec(nyckelBytes, "HmacSHA256");
     }
@@ -47,8 +47,8 @@ public class JwtUtils {
         return extractClaims(token, Claims::getSubject);
     }
 
-    private <T> T extractClaims(String token, Function<Claims, T> claimsResolver) {
-        return claimsResolver.apply(Jwts.parser().verifyWith(nyckel).build().parseSignedClaims(token).getPayload());
+    private <T> T extractClaims(String token, Function<Claims, T> claimsTFunction){
+        return claimsTFunction.apply(Jwts.parser().verifyWith(nyckel).build().parseSignedClaims(token).getPayload());
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {

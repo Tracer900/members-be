@@ -10,7 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -33,18 +32,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         final String authHeader = request.getHeader("Authorization");
         final String jwtToken;
-        final String medlemEpost;
+        final String epost;
 
-        if(authHeader != null || authHeader.isBlank()) {
+        if(authHeader == null || authHeader.isBlank()) {
             filterChain.doFilter(request, response);
             return;
         }
 
         jwtToken = authHeader.substring(7);
-        medlemEpost = jwtUtils.extractUsername(jwtToken);
+        epost = jwtUtils.extractUsername(jwtToken);
 
-        if(medlemEpost != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = medlemService.loadUserByUsername(medlemEpost);
+        if(epost != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = medlemService.loadUserByUsername(epost);
 
             if(jwtUtils.isTokenValid(jwtToken, userDetails)) {
                 SecurityContext securityContext = SecurityContextHolder.createEmptyContext();

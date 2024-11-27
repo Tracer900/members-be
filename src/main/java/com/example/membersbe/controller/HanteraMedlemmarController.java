@@ -26,8 +26,8 @@ public class HanteraMedlemmarController {
     }
 
     @PostMapping("/auth/login")
-    public ResponseEntity<RequestResponse> loggaIn(@RequestBody RequestResponse request) {
-        return ResponseEntity.ok(hanteraMedlemmarService.inLoggning(request));
+    public ResponseEntity<RequestResponse> login(@RequestBody RequestResponse request) {
+        return ResponseEntity.ok(hanteraMedlemmarService.login(request));
     }
 
     @PostMapping("/auth/uppdatera-token")
@@ -41,12 +41,12 @@ public class HanteraMedlemmarController {
     }
 
     @GetMapping("/admin/hamta-medlem/{id}")
-    public ResponseEntity<RequestResponse> hamtaMedlem(@PathVariable UUID id) {
+    public ResponseEntity<RequestResponse> hamtaMedlem(@PathVariable Integer id) {
         return ResponseEntity.ok(hanteraMedlemmarService.hamtaMedlemMedId(id));
     }
 
     @PutMapping("/admin/uppdatera/{id}")
-    public ResponseEntity<RequestResponse> uppdateraMedlem(@PathVariable UUID id, @RequestBody Medlem medlem) {
+    public ResponseEntity<RequestResponse> uppdateraMedlem(@PathVariable Integer id, @RequestBody Medlem medlem) {
         return ResponseEntity.ok(hanteraMedlemmarService.uppdateraMedlem(id, medlem));
     }
 
@@ -59,7 +59,7 @@ public class HanteraMedlemmarController {
     }
 
     @DeleteMapping("/admin/radera-medlem/{id}")
-    public ResponseEntity<RequestResponse> raderaMedlem(@PathVariable UUID id) {
+    public ResponseEntity<RequestResponse> raderaMedlem(@PathVariable Integer id) {
         return ResponseEntity.ok(hanteraMedlemmarService.raderaMedlem(id));
     }
 }

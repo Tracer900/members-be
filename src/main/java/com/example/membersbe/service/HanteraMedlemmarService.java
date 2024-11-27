@@ -38,12 +38,12 @@ public class HanteraMedlemmarService {
         try {
             Medlem medlem = new Medlem();
 
-            medlem.setEpost(registreraMedlemRequest.getEpost());
-            medlem.setPassword(passwordEncoder.encode(registreraMedlemRequest.getPassword()));
             medlem.setNamn(registreraMedlemRequest.getNamn());
             medlem.setGatuadress(registreraMedlemRequest.getGatuadress());
             medlem.setPostnummer(registreraMedlemRequest.getPostnummer());
             medlem.setPostort(registreraMedlemRequest.getPostort());
+            medlem.setEpost(registreraMedlemRequest.getEpost());
+            medlem.setPassword(passwordEncoder.encode(registreraMedlemRequest.getPassword()));
             medlem.setTelefon(registreraMedlemRequest.getTelefon());
             medlem.setRoll(registreraMedlemRequest.getRoll());
 
@@ -62,7 +62,7 @@ public class HanteraMedlemmarService {
         return response;
     }
 
-    public RequestResponse inLoggning(RequestResponse loginRequest) {
+    public RequestResponse login(RequestResponse loginRequest) {
         RequestResponse response = new RequestResponse();
 
         try {
@@ -130,7 +130,7 @@ public class HanteraMedlemmarService {
         }
     }
 
-    public RequestResponse hamtaMedlemMedId(UUID id) {
+    public RequestResponse hamtaMedlemMedId(Integer id) {
         RequestResponse response = new RequestResponse();
         try {
             Medlem medlem = medlemRepository.findById(id).orElseThrow(() -> new RuntimeException("User Not found"));
@@ -145,7 +145,7 @@ public class HanteraMedlemmarService {
     }
 
 
-    public RequestResponse raderaMedlem(UUID id) {
+    public RequestResponse raderaMedlem(Integer id) {
         RequestResponse response = new RequestResponse();
         try {
             Optional<Medlem> optionalMedlem = medlemRepository.findById(id);
@@ -164,7 +164,7 @@ public class HanteraMedlemmarService {
         return response;
     }
 
-    public RequestResponse uppdateraMedlem(UUID id, Medlem medlem) {
+    public RequestResponse uppdateraMedlem(Integer id, Medlem medlem) {
         RequestResponse response = new RequestResponse();
         try {
             Optional<Medlem> optionalMedlem = medlemRepository.findById(id);
@@ -172,7 +172,6 @@ public class HanteraMedlemmarService {
                 Medlem existerandeMedlem = optionalMedlem.get();
                 existerandeMedlem.setEpost(medlem.getEpost());
                 existerandeMedlem.setNamn(medlem.getNamn());
-                existerandeMedlem.setPostort(medlem.getPostort());
                 existerandeMedlem.setRoll(medlem.getRoll());
 
                 // Check if password is present in the request

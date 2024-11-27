@@ -19,36 +19,14 @@ public class RequestResponse {
     private String utgangsTid;
     private String namn;
     private String gatuadress;
-    private int postnummer;
+    private String postnummer;
     private String postort;
     private String epost;
-    private String telefon;
     private String password;
+    private String telefon;
     private String roll;
     private Medlem medlem;
     private List<Medlem> medlemmar;
-
-    public RequestResponse(int httpStatus, String error, String meddelande, String jwtToken,
-                           String uppdateraJwtToken, String utgangsTid, String namn, String gatuadress,
-                           int postnummer, String postort, String epost, String telefon, String password, String roll,
-                           Medlem medlem, List<Medlem> medlemmar) {
-        this.httpStatus = httpStatus;
-        this.error = error;
-        this.meddelande = meddelande;
-        this.jwtToken = jwtToken;
-        this.uppdateraJwtToken = uppdateraJwtToken;
-        this.utgangsTid = utgangsTid;
-        this.namn = namn;
-        this.gatuadress = gatuadress;
-        this.postnummer = postnummer;
-        this.postort = postort;
-        this.epost = epost;
-        this.telefon = telefon;
-        this.password = password;
-        this.roll = roll;
-        this.medlem = medlem;
-        this.medlemmar = medlemmar;
-    }
 
     public RequestResponse() {
     }
@@ -117,11 +95,11 @@ public class RequestResponse {
         this.gatuadress = gatuadress;
     }
 
-    public int getPostnummer() {
+    public String getPostnummer() {
         return postnummer;
     }
 
-    public void setPostnummer(int postnummer) {
+    public void setPostnummer(String postnummer) {
         this.postnummer = postnummer;
     }
 
@@ -184,30 +162,30 @@ public class RequestResponse {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        RequestResponse that = (RequestResponse) o;
-        return httpStatus == that.httpStatus
-                && postnummer == that.postnummer
-                && Objects.equals(error, that.error)
-                && Objects.equals(meddelande, that.meddelande)
-                && Objects.equals(jwtToken, that.jwtToken)
-                && Objects.equals(uppdateraJwtToken, that.uppdateraJwtToken)
-                && Objects.equals(utgangsTid, that.utgangsTid)
-                && Objects.equals(namn, that.namn)
-                && Objects.equals(gatuadress, that.gatuadress)
-                && Objects.equals(postort, that.postort)
-                && Objects.equals(epost, that.epost)
-                && Objects.equals(telefon, that.telefon)
-                && Objects.equals(password, that.password)
-                && Objects.equals(roll, that.roll)
-                && Objects.equals(medlem, that.medlem)
-                && Objects.equals(medlemmar, that.medlemmar);
+        RequestResponse response = (RequestResponse) o;
+        return httpStatus == response.httpStatus
+                && Objects.equals(error, response.error)
+                && Objects.equals(meddelande, response.meddelande)
+                && Objects.equals(jwtToken, response.jwtToken)
+                && Objects.equals(uppdateraJwtToken, response.uppdateraJwtToken)
+                && Objects.equals(utgangsTid, response.utgangsTid)
+                && Objects.equals(namn, response.namn)
+                && Objects.equals(gatuadress, response.gatuadress)
+                && Objects.equals(postnummer, response.postnummer)
+                && Objects.equals(postort, response.postort)
+                && Objects.equals(epost, response.epost)
+                && Objects.equals(password, response.password)
+                && Objects.equals(telefon, response.telefon)
+                && Objects.equals(roll, response.roll)
+                && Objects.equals(medlem, response.medlem)
+                && Objects.equals(medlemmar, response.medlemmar);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(httpStatus, error, meddelande, jwtToken,
-                uppdateraJwtToken, utgangsTid, namn, gatuadress, postnummer,
-                postort, epost, telefon, password, roll, medlem, medlemmar);
+        return Objects.hash(httpStatus, error, meddelande, jwtToken, uppdateraJwtToken,
+                utgangsTid, namn, gatuadress, postnummer, postort, epost, password,
+                telefon, roll, medlem, medlemmar);
     }
 
     @Override
@@ -221,11 +199,11 @@ public class RequestResponse {
                 ", utgangsTid='" + utgangsTid + '\'' +
                 ", namn='" + namn + '\'' +
                 ", gatuadress='" + gatuadress + '\'' +
-                ", postnummer=" + postnummer +
+                ", postnummer='" + postnummer + '\'' +
                 ", postort='" + postort + '\'' +
                 ", epost='" + epost + '\'' +
-                ", telefon='" + telefon + '\'' +
                 ", password='" + password + '\'' +
+                ", telefon='" + telefon + '\'' +
                 ", roll='" + roll + '\'' +
                 ", medlem=" + medlem +
                 ", medlemmar=" + medlemmar +

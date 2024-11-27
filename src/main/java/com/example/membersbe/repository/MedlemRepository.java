@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface MedlemRepository extends JpaRepository<Medlem, UUID> {
+public interface MedlemRepository extends JpaRepository<Medlem, Integer> {
 
     Optional<Medlem> findByEpost(String epost);
 }
