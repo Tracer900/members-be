@@ -51,7 +51,7 @@ public class HanteraMedlemmarService {
 
             if(nyMedlem.getId() != null) {
                 response.setMedlem(nyMedlem);
-                response.setMeddelande("Medlem registrerad.");
+                response.setMeddelande("Medlem registrerad");
                 response.setHttpStatus(200);
             }
 
@@ -77,7 +77,7 @@ public class HanteraMedlemmarService {
             response.setJwtToken(jwt);
             response.setUppdateraJwtToken(uppdateradJwt);
             response.setUtgangsTid("2Hrs");
-            response.setMeddelande("Medlem inloggad.");
+            response.setMeddelande("Medlem inloggad");
 
         } catch(Exception e) {
             response.setHttpStatus(500);
@@ -97,7 +97,7 @@ public class HanteraMedlemmarService {
                 response.setJwtToken(jwt);
                 response.setUppdateraJwtToken(uppdateraTokenRequest.getJwtToken());
                 response.setUtgangsTid("2Hrs");
-                response.setMeddelande("Uppdaterade behörighetstoken.");
+                response.setMeddelande("Behörighetstoken är uppdaterad");
             }
             response.setHttpStatus(200);
             return response;
@@ -117,15 +117,15 @@ public class HanteraMedlemmarService {
             if (!result.isEmpty()) {
                 response.setMedlemmar(result);
                 response.setHttpStatus(200);
-                response.setMeddelande("Successful");
+                response.setMeddelande("Hämtade alla medlemmar");
             } else {
                 response.setHttpStatus(404);
-                response.setMeddelande("No users found");
+                response.setMeddelande("Kunde inte hitta några medlemmar");
             }
             return response;
         } catch (Exception e) {
             response.setHttpStatus(500);
-            response.setMeddelande("Error occurred: " + e.getMessage());
+            response.setMeddelande("Error vid hämtning av medlemmarna: " + e.getMessage());
             return response;
         }
     }
@@ -136,10 +136,10 @@ public class HanteraMedlemmarService {
             Medlem medlem = medlemRepository.findById(id).orElseThrow(() -> new RuntimeException("User Not found"));
             response.setMedlem(medlem);
             response.setHttpStatus(200);
-            response.setMeddelande("Users with id '" + id + "' found successfully");
+            response.setMeddelande("Medlem med id " + id + " hämtad");
         } catch (Exception e) {
             response.setHttpStatus(500);
-            response.setMeddelande("Error occurred: " + e.getMessage());
+            response.setMeddelande("Error vid hämtning av medlem med id " + id + ": " + e.getMessage());
         }
         return response;
     }
@@ -152,14 +152,14 @@ public class HanteraMedlemmarService {
             if (optionalMedlem.isPresent()) {
                 medlemRepository.deleteById(id);
                 response.setHttpStatus(200);
-                response.setMeddelande("User deleted successfully");
+                response.setMeddelande("Medlem raderad");
             } else {
                 response.setHttpStatus(404);
-                response.setMeddelande("User not found for deletion");
+                response.setMeddelande("Medlemmen kunde inte hittas");
             }
         } catch (Exception e) {
             response.setHttpStatus(500);
-            response.setMeddelande("Error occurred while deleting user: " + e.getMessage());
+            response.setMeddelande("Error, medlemmen kunde inte raderas: " + e.getMessage());
         }
         return response;
     }
@@ -184,14 +184,14 @@ public class HanteraMedlemmarService {
                 Medlem uppdateradMedlem = medlemRepository.save(existerandeMedlem);
                 response.setMedlem(uppdateradMedlem);
                 response.setHttpStatus(200);
-                response.setMeddelande("User updated successfully");
+                response.setMeddelande("Medlem uppdaterad");
             } else {
                 response.setHttpStatus(404);
-                response.setMeddelande("User not found for update");
+                response.setMeddelande("Medlemmen kunde inte hittas");
             }
         } catch (Exception e) {
             response.setHttpStatus(500);
-            response.setMeddelande("Error occurred while updating user: " + e.getMessage());
+            response.setMeddelande("Error, medlemmen kunde inte uppdateras: " + e.getMessage());
         }
         return response;
     }
@@ -204,15 +204,15 @@ public class HanteraMedlemmarService {
             if (userOptional.isPresent()) {
                 response.setMedlem(userOptional.get());
                 response.setHttpStatus(200);
-                response.setMeddelande("successful");
+                response.setMeddelande("Hämtade profilinformation");
             } else {
                 response.setHttpStatus(404);
-                response.setMeddelande("User not found for update");
+                response.setMeddelande("Medlemmen kunde inte hittas");
             }
 
         }catch (Exception e){
             response.setHttpStatus(500);
-            response.setMeddelande("Error occurred while getting user info: " + e.getMessage());
+            response.setMeddelande("Error vid hämtning av profilinformation: " + e.getMessage());
         }
         return response;
     }

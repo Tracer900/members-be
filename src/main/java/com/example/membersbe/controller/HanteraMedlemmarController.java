@@ -45,16 +45,21 @@ public class HanteraMedlemmarController {
         return ResponseEntity.ok(hanteraMedlemmarService.hamtaMedlemMedId(id));
     }
 
-    @GetMapping("/admin/uppdatera/{id}")
+    @PutMapping("/admin/uppdatera/{id}")
     public ResponseEntity<RequestResponse> uppdateraMedlem(@PathVariable UUID id, @RequestBody Medlem medlem) {
         return ResponseEntity.ok(hanteraMedlemmarService.uppdateraMedlem(id, medlem));
     }
 
-    @GetMapping("/admin/hamtaprofil/{id}")
+    @GetMapping("/admin/hamta-profil")
     public ResponseEntity<RequestResponse> hamtaMinInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String epost = authentication.getName();
         RequestResponse response = hanteraMedlemmarService.hamtaMinInfo(epost);
         return ResponseEntity.status(response.getHttpStatus()).body(response);
+    }
+
+    @DeleteMapping("/admin/radera-medlem/{id}")
+    public ResponseEntity<RequestResponse> raderaMedlem(@PathVariable UUID id) {
+        return ResponseEntity.ok(hanteraMedlemmarService.raderaMedlem(id));
     }
 }
