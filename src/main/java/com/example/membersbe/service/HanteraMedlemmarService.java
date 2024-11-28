@@ -74,9 +74,11 @@ public class HanteraMedlemmarService {
             var uppdateradJwt = jwtUtils.uppdateraJwt(new HashMap<>(), medlem);
             response.setHttpStatus(200);
             response.setJwtToken(jwt);
+            response.setRoll(medlem.getRoll());
             response.setUppdateraJwtToken(uppdateradJwt);
             response.setUtgangsTid("2Hrs");
             response.setMeddelande("Medlem inloggad");
+
 
         } catch(Exception e) {
             response.setHttpStatus(500);
